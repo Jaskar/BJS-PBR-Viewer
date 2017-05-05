@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+    <title>Material Viewer</title>
+
+    <link rel="icon" href="./img/icon.png" type="image/png" />
+
+    <!--Libraries-->
+    <!--<script src="http://cdn.babylonjs.com/2-5/babylon.max.js"></script>-->
+    <script src="js/libraries/babylon.max.js"></script>
+
+    <!--Scripts js included-->
+    <script src="js/index.js"></script>
+    <script src="js/AppManager.js"></script>
+    <script src="js/PBRinfo.js"></script>
+    <script src="js/ViewManager.js"></script>
+
+    <!--CSS-->
+    <link rel="stylesheet" type="text/css" href="./css/index.css" />
+</head>
+
+<body>
+    <div class="topBar">
+        <div class="topBar_text" id="topBar_Title">Babylon PBR Viewer</div>
+        <div class="topBar_text" id="topBar_Subtitle">-</div>
+
+        <div class="topBar_buttons">
+            <div class="topBar_button" id="topBar_debugLayer">Debug Layer</div>
+            <!--<div class="topBar_button" id="topBar_Help">Help</div>-->
+            <!--<div class="topBar_button" id="topBar_Save_BEPI" tooltip="Babylon PBR Easy Import format">Save BEPI</div>-->
+        </div>
+    </div>
+
+    <div class="leftBar">
+        <div class="leftBar_buttons">
+            <!--<div class="leftBar_button" id="leftBar_ButtonSettings"></div>-->
+            <div class="leftBar_button" id="leftBar_ButtonTextures"><img src="./img/icon_textures.png">
+            </div><div class="leftBar_button" id="leftBar_ButtonLights"><img src="./img/icon_lights.png">
+            </div><div class="leftBar_button" id="leftBar_ButtonSkybox"><img src="./img/icon_skybox.png">
+            </div><!--<div class="leftBar_button" id="leftBar_ButtonCamera"><img src="./img/icon_camera.png"></div>-->
+            <!--</div><div class="leftBar_button" id="leftBar_ButtonMagic">-->
+            <!--</div><div class="leftBar_button" id="leftBar_ButtonGPS">-->
+            <!--</div><div class="leftBar_button" id="leftBar_ButtonMovie">-->
+            <!--</div><div class="leftBar_button" id="leftBar_ButtonVR"></div>-->
+        </div>
+        <div class="leftBar_tabs">
+            <!--<div class="leftBar_tab" id="leftBar_TabSettings">-->
+            <div class="leftBar_tab" id="leftBar_TabTextures">
+                <div class="lb_title">MATERIAL</div>
+                <div class="lb_selectionDiv"><select id="lbTex_MeshSelection"></select></div>
+                <div class="lbtTex_workflowButtons">
+                    <div id="lbtTex_WorkflowButtonMetallic">Metallic</div><div id="lbtTex_WorkflowButtonSpecular">Specular</div>
+                </div>
+                <div class="lbtText_textureDiv" id="lbtText_textureDivAlbedo">
+                    <div class="lbt_divLabel">Albedo</div>
+                    <img class="lbtText_textureDivImg" id="albedoImg" src="./assets/amiga.jpg"><input type="file" class="lbtText_textureDivInput"
+                        id="albedoInput">
+                </div>
+                <div class="lbtText_textureDiv" id="lbtText_textureDivAO">
+                    <div class="lbt_divLabel">Ambient Oclusion</div>
+                    <img class="lbtText_textureDivImg" id="aoImg" src="./assets/amiga.jpg"><input type="file" class="lbtText_textureDivInput"
+                        id="aoInput">
+                </div>
+                <div class="lbtText_textureDiv" id="lbtText_textureDivEmissive">
+                    <div class="lbt_divLabel">Emissive</div>
+                    <img class="lbtText_textureDivImg" id="emissiveImg" src="./assets/amiga.jpg"><input type="file" class="lbtText_textureDivInput"
+                        id="emissiveInput">
+                </div>
+                <div class="lbtText_textureDiv" id="lbtText_textureDivMetallic">
+                    <div class="lbt_divLabel">Metallic</div>
+                    <img class="lbtText_textureDivImg" id="metallicImg" src="./assets/amiga.jpg"><input type="file" class="lbtText_textureDivInput"
+                        id="metallicInput">
+                </div>
+                <div class="lbtText_textureDiv" id="lbtText_textureDivNormal">
+                    <div class="lbt_divLabel">Normal</div>
+                    <img class="lbtText_textureDivImg" id="normalImg" src="./assets/amiga.jpg"><input type="file" class="lbtText_textureDivInput"
+                        id="normalInput">
+                </div>
+                <div class="lbtText_textureDiv" id="lbtText_textureDivRoughness">
+                    <div class="lbt_divLabel">Roughness</div>
+                    <img class="lbtText_textureDivImg" id="roughnessImg" src="./assets/amiga.jpg"><input type="file" class="lbtText_textureDivInput"
+                        id="roughnessInput">
+                </div>
+                <div class="lbtText_textureDiv" id="lbtText_textureDivSpecular">
+                    <div class="lbt_divLabel">Specular</div>
+                    <img class="lbtText_textureDivImg" id="specularImg" src="./assets/amiga.jpg"><input type="file" class="lbtText_textureDivInput"
+                        id="specularInput">
+                </div>
+
+                <!--<div class="lbtText_rangeDiv" id="lbtText_rangeDivEmissive">
+                    <div class="lbtText_rangeDivLabel">Emissive power</div>
+                    <input type="range" class="lbtText_rangeDivRange" id="emissiveRange" min="0" max="1" step="0.01">
+                    <div class="lbtText_rangeDivValue" id="emissiveValue"></div>
+                </div>-->
+                <!--<div class="lbtText_rangeDiv" id="lbtText_rangeDivReflection">
+                    <div class="lbtText_rangeDivLabel">Reflection power</div>
+                    <input type="range" class="lbtText_rangeDivRange" id="reflectionRange" min="0" max="1" step="0.01">
+                    <div class="lbtText_rangeDivValue" id="reflectionValue"></div>
+                </div>-->
+                <!--<div class="lbtText_rangeDiv" id="lbtText_rangeDivRoughness">
+                    <div class="lbtText_rangeDivLabel">Roughness power</div>
+                    <input type="range" class="lbtText_rangeDivRange" id="roughnessRange" min="0" max="1" step="0.01">
+                    <div class="lbtText_rangeDivValue" id="roughnessValue"></div>
+                </div>-->
+                <!--<div class="lbtText_rangeDiv" id="lbtText_rangeDivSpecular">
+                    <div class="lbtText_rangeDivLabel">Specular power</div>
+                    <input type="range" class="lbtText_rangeDivRange" id="specularRange" min="0" max="1" step="0.01">
+                    <div class="lbtText_rangeDivValue" id="specularValue"></div>
+                </div>-->
+                <div class="lbtText_rangeDiv" id="lbtText_rangeDivContrast">
+                    <div class="lbtText_rangeDivLabel">Camera contrast</div>
+                    <input type="range" class="lbtText_rangeDivRange" id="contrastRange" min="0" max="1" step="0.01">
+                    <div class="lbtText_rangeDivValue" id="contrastValue"></div>
+                </div>
+                <div class="lbtText_rangeDiv" id="lbtText_rangeDivExposure">
+                    <div class="lbtText_rangeDivLabel">Camera exposure</div>
+                    <input type="range" class="lbtText_rangeDivRange" id="exposureRange" min="0" max="1" step="0.01">
+                    <div class="lbtText_rangeDivValue" id="exposureValue"></div>
+                </div>
+                <div class="lbtText_rangeDiv" id="lbtText_rangeDivOpacity">
+                    <div class="lbtText_rangeDivLabel">Material Opacity</div>
+                    <input type="range" class="lbtText_rangeDivRange" id="opacityRange" min="0" max="1" step="0.01">
+                    <div class="lbtText_rangeDivValue" id="opacityValue"></div>
+                </div>
+                <div class="lbtText_rangeDiv" id="lbtText_rangeDivLDirect">
+                    <div class="lbtText_rangeDivLabel">Direct light</div>
+                    <input type="range" class="lbtText_rangeDivRange" id="lDirectRange" min="0" max="1" step="0.01">
+                    <div class="lbtText_rangeDivValue" id="lDirectValue"></div>
+                </div>
+                <div class="lbtText_rangeDiv" id="lbtText_rangeDivLEnv">
+                    <div class="lbtText_rangeDivLabel">Environment light</div>
+                    <input type="range" class="lbtText_rangeDivRange" id="lEnvRange" min="0" max="1" step="0.01">
+                    <div class="lbtText_rangeDivValue" id="lEnvValue"></div>
+                </div>
+                <br>
+            </div>
+            <div class="leftBar_tab" id="leftBar_TabLights">
+                <div class="lb_title">LIGHTS</div>
+                <div id="lbtLig_list">
+                </div>
+                <div id="lbtLig_addOne">Add a light</div>
+            </div>
+            <div class="leftBar_tab" id="leftBar_TabSkybox">
+                <div class="lb_title">Skybox - HDR</div>
+                <div class="lb_selectionDiv"><select id="lbSky_Selection"></select></div>
+                <div id="lbtSky_addOne">Add a Skybox - HDR</div>
+                <input type="file" id="SkyInput">
+            </div>
+            <div class="leftBar_tab" id="leftBar_TabCamera">
+            </div>
+            <!--</div><div class="leftBar_tab" id="leftBar_TabMagic">
+            </div><div class="leftBar_tab" id="leftBar_TabGPS">
+            </div><div class="leftBar_tab" id="leftBar_TabMovie">
+            </div><div class="leftBar_tab" id="leftBar_TabVR"></div>-->
+        </div>
+    </div>
+
+    <div id="canvasContainer">
+        <canvas id="renderCanvas" class="canvasDiv"></canvas>
+        <div id="inputBabylonFileMainDiv" class="canvasDiv"></div>
+        <input type="file" id="inputBabylonFileMain" class="canvasDiv" />
+        <div id="inputBabylonLoader" class="canvasDiv">
+            <div id="cssload-contain">
+                <div class="cssload-wrap" id="cssload-wrap1">
+                    <div class="cssload-ball" id="cssload-ball1"></div>
+                </div>
+
+                <div class="cssload-wrap" id="cssload-wrap2">
+                    <div class="cssload-ball" id="cssload-ball2"></div>
+                </div>
+
+                <div class="cssload-wrap" id="cssload-wrap3">
+                    <div class="cssload-ball" id="cssload-ball3"></div>
+                </div>
+
+                <div class="cssload-wrap" id="cssload-wrap4">
+                    <div class="cssload-ball" id="cssload-ball4"></div>
+                </div>
+
+            </div>
+        </div>
+    <div>
+
+    <!--<div class="bottomBar">
+        <div class="bottomBar_button">F11</div>
+    </div>-->
+</body>
+
+</html>

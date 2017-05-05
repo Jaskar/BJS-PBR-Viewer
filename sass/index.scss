@@ -1,0 +1,14 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+@import "bottomBar";
+@import "canvas";
+@import "cssLoader";
+@import "leftBar";
+@import "loader";
+@import "topBar";

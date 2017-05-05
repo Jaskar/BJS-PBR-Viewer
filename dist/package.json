@@ -1,0 +1,7 @@
+{
+  "name"    : "Material Viewer",
+  "version" : "0.1.0",
+  "main"    : "main.js",
+  "author"	: "KEYVEO",
+  "description": "Online Babylon Material Viewer"
+}

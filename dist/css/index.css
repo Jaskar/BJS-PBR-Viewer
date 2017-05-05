@@ -1,0 +1,424 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; }
+
+.bottomBar {
+  z-index: 1;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  height: auto;
+  width: auto;
+  color: white; }
+  .bottomBar .bottomBar_button {
+    width: 20px;
+    height: 20px;
+    margin-left: 15px; }
+
+#canvasContainer {
+  position: absolute;
+  top: 55px;
+  left: 322px;
+  width: calc(100% - 322px);
+  height: calc(100% - 55px); }
+
+.canvasDiv {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }
+
+#inputBabylonFileMain {
+  opacity: 0; }
+
+#inputBabylonFileMainDiv {
+  box-sizing: border-box;
+  border: 3px dashed #0087F7;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white; }
+
+#inputBabylonLoader {
+  display: none;
+  background-color: black; }
+
+#cssload-contain {
+  width: 146px;
+  height: 49px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+  opacity: 0;
+  animation: fadeIn 1.15s 1;
+  -o-animation: fadeIn 1.15s 1;
+  -ms-animation: fadeIn 1.15s 1;
+  -webkit-animation: fadeIn 1.15s 1;
+  -moz-animation: fadeIn 1.15s 1;
+  animation-fill-mode: forwards;
+  -o-animation-fill-mode: forwards;
+  -ms-animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards; }
+
+.cssload-wrap {
+  animation: translate 1150ms infinite ease-in-out alternate, zindex 2300ms infinite ease-in-out;
+  -o-animation: translate 1150ms infinite ease-in-out alternate, zindex 2300ms infinite ease-in-out;
+  -ms-animation: translate 1150ms infinite ease-in-out alternate, zindex 2300ms infinite ease-in-out;
+  -webkit-animation: translate 1150ms infinite ease-in-out alternate, zindex 2300ms infinite ease-in-out;
+  -moz-animation: translate 1150ms infinite ease-in-out alternate, zindex 2300ms infinite ease-in-out;
+  position: absolute; }
+
+.cssload-ball {
+  width: 49px;
+  height: 49px;
+  box-shadow: 0 -6.25px 0 rgba(0, 0, 0, 0.15) inset;
+  background-color: #ef4136;
+  border-radius: 50%;
+  animation: scale 1150ms infinite ease-in-out alternate;
+  -o-animation: scale 1150ms infinite ease-in-out alternate;
+  -ms-animation: scale 1150ms infinite ease-in-out alternate;
+  -webkit-animation: scale 1150ms infinite ease-in-out alternate;
+  -moz-animation: scale 1150ms infinite ease-in-out alternate;
+  animation-delay: -575ms;
+  -o-animation-delay: -575ms;
+  -ms-animation-delay: -575ms;
+  -webkit-animation-delay: -575ms;
+  -moz-animation-delay: -575ms;
+  transform: scale(0.5);
+  -o-transform: scale(0.5);
+  -ms-transform: scale(0.5);
+  -webkit-transform: scale(0.5);
+  -moz-transform: scale(0.5);
+  border: 2px solid white; }
+
+.cssload-ball:after {
+  content: "";
+  width: 49px;
+  height: 13px;
+  background: white;
+  position: absolute;
+  top: 68px;
+  border-radius: 50%; }
+
+#cssload-wrap2 {
+  animation-delay: -1150ms;
+  -o-animation-delay: -1150ms;
+  -ms-animation-delay: -1150ms;
+  -webkit-animation-delay: -1150ms;
+  -moz-animation-delay: -1150ms; }
+
+#cssload-ball2 {
+  background-color: #f9ed32;
+  animation-delay: -1725ms;
+  -o-animation-delay: -1725ms;
+  -ms-animation-delay: -1725ms;
+  -webkit-animation-delay: -1725ms;
+  -moz-animation-delay: -1725ms; }
+
+#cssload-wrap3 {
+  animation-delay: -1725ms;
+  -o-animation-delay: -1725ms;
+  -ms-animation-delay: -1725ms;
+  -webkit-animation-delay: -1725ms;
+  -moz-animation-delay: -1725ms; }
+
+#cssload-ball3 {
+  background-color: #8dc63f;
+  animation-delay: -2300ms; }
+
+#cssload-wrap4 {
+  animation-delay: -2875ms;
+  -o-animation-delay: -2875ms;
+  -ms-animation-delay: -2875ms;
+  -webkit-animation-delay: -2875ms;
+  -moz-animation-delay: -2875ms; }
+
+#cssload-ball4 {
+  background-color: #00aeef;
+  animation-delay: -3450ms;
+  -o-animation-delay: -3450ms;
+  -ms-animation-delay: -3450ms;
+  -webkit-animation-delay: -3450ms;
+  -moz-animation-delay: -3450ms; }
+
+@keyframes translate {
+  100% {
+    transform: translateX(97px); } }
+
+@keyframes scale {
+  100% {
+    transform: scale(1); } }
+
+@keyframes zindex {
+  25% {
+    z-index: 1; }
+  75% {
+    z-index: -1; } }
+
+@keyframes fadeIn {
+  100% {
+    opacity: 1; } }
+
+.leftBar {
+  position: absolute;
+  top: 55px;
+  left: 0px;
+  width: 322px;
+  box-sizing: border-box;
+  height: calc(100% - 55px);
+  background-color: #595959; }
+  .leftBar .leftBar_buttons {
+    width: 100%;
+    height: 40px; }
+    .leftBar .leftBar_buttons .leftBar_button {
+      display: inline-block;
+      margin: 0px;
+      height: 41px;
+      width: 46px;
+      box-sizing: border-box;
+      border-right: 1px solid black;
+      border-bottom: 1px solid black;
+      background-color: #333333;
+      cursor: pointer; }
+      .leftBar .leftBar_buttons .leftBar_button img {
+        width: 32px;
+        height: 32px;
+        margin: 4px 0 0 8px; }
+    .leftBar .leftBar_buttons .activeTab {
+      background-color: #595959;
+      border-bottom: none; }
+  .leftBar .leftBar_tabs {
+    height: 100%; }
+    .leftBar .leftBar_tabs .leftBar_tab {
+      height: calc(100% - 40px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: none; }
+      .leftBar .leftBar_tabs .leftBar_tab .lb_title {
+        width: 100%;
+        padding: 2px;
+        box-sizing: border-box;
+        text-align: center;
+        font-size: 1.1em;
+        color: #EEEEEE;
+        border-bottom: 1px solid grey; }
+      .leftBar .leftBar_tabs .leftBar_tab .lb_selectionDiv {
+        width: 280px;
+        margin: auto;
+        margin-top: 15px; }
+        .leftBar .leftBar_tabs .leftBar_tab .lb_selectionDiv select {
+          width: 100%;
+          background-color: #333333;
+          color: white;
+          border: none;
+          line-height: 35px;
+          font-size: 1.1em; }
+      .leftBar .leftBar_tabs .leftBar_tab .lbt_divLabel {
+        color: white;
+        margin-top: 15px;
+        margin-bottom: 10px; }
+      .leftBar .leftBar_tabs .leftBar_tab .lbt_inputVec3 {
+        display: inline-block;
+        width: 50px;
+        margin: 0 15px;
+        line-height: 25px;
+        text-align: center;
+        color: white;
+        background-color: #333333;
+        border: none;
+        border-radius: 4px; }
+    .leftBar .leftBar_tabs #leftBar_TabLights #lbtLig_list {
+      width: 280px;
+      margin: 15px auto; }
+    .leftBar .leftBar_tabs #leftBar_TabLights .lbtLig_list_delete {
+      cursor: pointer;
+      float: right;
+      width: 32px;
+      margin-right: 50px;
+      margin-top: -25px; }
+    .leftBar .leftBar_tabs #leftBar_TabLights #lbtLig_addOne {
+      width: 280px;
+      margin: auto;
+      padding: 12px;
+      box-sizing: border-box;
+      text-align: center;
+      background-color: #333333;
+      color: #CCCCCC;
+      cursor: pointer;
+      border-radius: 6px; }
+    .leftBar .leftBar_tabs #leftBar_TabLights #lbtLig_addOne:active {
+      background-color: #1A1A1A;
+      color: #1CAAD9; }
+    .leftBar .leftBar_tabs #leftBar_TabTextures .lbtTex_workflowButtons {
+      width: 280px;
+      margin: auto;
+      margin-top: 10px; }
+      .leftBar .leftBar_tabs #leftBar_TabTextures .lbtTex_workflowButtons div {
+        display: none;
+        width: 140px;
+        padding: 12px;
+        box-sizing: border-box;
+        text-align: center;
+        background-color: #333333;
+        color: #CCCCCC;
+        cursor: pointer; }
+      .leftBar .leftBar_tabs #leftBar_TabTextures .lbtTex_workflowButtons .activeButton {
+        background-color: #1A1A1A;
+        color: #1CAAD9; }
+    .leftBar .leftBar_tabs #leftBar_TabTextures .lbtTex_workflowButtons :first-child {
+      border-top-left-radius: 6px;
+      border-bottom-left-radius: 6px; }
+    .leftBar .leftBar_tabs #leftBar_TabTextures .lbtTex_workflowButtons :last-child {
+      border-top-right-radius: 6px;
+      border-bottom-right-radius: 6px; }
+    .leftBar .leftBar_tabs #leftBar_TabTextures .lbtText_textureDiv {
+      width: 280px;
+      margin: auto;
+      vertical-align: middle;
+      display: none; }
+      .leftBar .leftBar_tabs #leftBar_TabTextures .lbtText_textureDiv .lbtText_textureDivImg {
+        display: inline-block;
+        vertical-align: top;
+        width: 40px;
+        height: 40px;
+        box-sizing: border-box;
+        border: 1px solid black; }
+      .leftBar .leftBar_tabs #leftBar_TabTextures .lbtText_textureDiv .lbtText_textureDivInput {
+        display: inline-block;
+        vertical-align: top;
+        overflow: hidden;
+        opacity: 0;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        margin-left: -40px;
+        box-sizing: border-box;
+        border: 1px solid black; }
+    .leftBar .leftBar_tabs #leftBar_TabTextures .lbtText_rangeDiv {
+      width: 280px;
+      margin: auto;
+      vertical-align: middle;
+      display: none; }
+      .leftBar .leftBar_tabs #leftBar_TabTextures .lbtText_rangeDiv .lbtText_rangeDivLabel {
+        color: white;
+        margin-top: 15px;
+        margin-bottom: 10px; }
+      .leftBar .leftBar_tabs #leftBar_TabTextures .lbtText_rangeDiv .lbtText_rangeDivRange {
+        display: inline-block;
+        vertical-align: middle;
+        width: 230px;
+        height: 30px; }
+      .leftBar .leftBar_tabs #leftBar_TabTextures .lbtText_rangeDiv .lbtText_rangeDivValue {
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+        width: 37px;
+        height: 30px;
+        line-height: 30px;
+        color: white;
+        background-color: #333333;
+        border-radius: 4px; }
+    .leftBar .leftBar_tabs #leftBar_TabSkybox #lbtSky_addOne {
+      width: 280px;
+      margin: auto;
+      margin-top: 25px;
+      padding: 12px;
+      box-sizing: border-box;
+      text-align: center;
+      background-color: #333333;
+      color: #CCCCCC;
+      cursor: pointer;
+      border-radius: 6px; }
+    .leftBar .leftBar_tabs #leftBar_TabSkybox .lbtSky_addOne:active {
+      background-color: #1A1A1A;
+      color: #1CAAD9; }
+    .leftBar .leftBar_tabs #leftBar_TabSkybox input {
+      opacity: 0; }
+
+#preloader_3 {
+  position: relative;
+  margin: 20px 0 0 72px; }
+
+#preloader_3:before {
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  content: '';
+  position: absolute;
+  background: #f1471c;
+  animation: preloader_3_before 1.5s infinite ease-in-out; }
+
+#preloader_3:after {
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  content: '';
+  position: absolute;
+  background: #f1471c;
+  left: 22px;
+  animation: preloader_3_after 1.5s infinite ease-in-out; }
+
+@keyframes preloader_3_before {
+  0% {
+    transform: translateX(0px) rotate(0deg); }
+  50% {
+    transform: translateX(50px) scale(1.2) rotate(260deg);
+    background: #13356d;
+    border-radius: 0; }
+  100% {
+    transform: translateX(0px) rotate(0deg); } }
+
+@keyframes preloader_3_after {
+  0% {
+    transform: translateX(0px); }
+  50% {
+    transform: translateX(-50px) scale(1.2) rotate(-260deg);
+    background: #13356d;
+    border-radius: 0; }
+  100% {
+    transform: translateX(0px); } }
+
+.topBar {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 55px;
+  box-sizing: border-box;
+  padding: 10px;
+  border: 1px solid black;
+  background-color: #333333;
+  vertical-align: middle; }
+  .topBar .topBar_text {
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    line-height: 34px;
+    margin-left: 10px; }
+  .topBar #topBar_Title {
+    font-size: 1.3em;
+    color: #C3C3C3; }
+  .topBar #topBar_Subtitle {
+    font-size: 1.1em;
+    color: #F4F4F4;
+    text-transform: uppercase; }
+  .topBar .topBar_buttons {
+    float: right;
+    margin-right: 20px; }
+    .topBar .topBar_buttons .topBar_button {
+      display: inline-block;
+      border-radius: 8px;
+      padding: 8px;
+      color: white;
+      cursor: pointer; }
+    .topBar .topBar_buttons div {
+      background-color: #1CAAD9; }
+    .topBar .topBar_buttons #topBar_Models {
+      background-color: #FF9E3A; }
+    .topBar .topBar_buttons #topBar_Save_BEPI {
+      display: none; }

@@ -1,0 +1,54 @@
+// *************** TOP BAR *************** //
+
+.topBar {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    width: 100%;
+    height: 55px;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid black;
+    background-color: #333333;
+    vertical-align: middle;
+    
+    .topBar_text {
+        display: inline-flex;
+        line-height: 34px;
+        margin-left: 10px;
+    }
+    #topBar_Title {
+        font-size: 1.3em;
+        color: #C3C3C3;
+    }
+    #topBar_Subtitle {
+        font-size: 1.1em;
+        color: #F4F4F4;
+        text-transform: uppercase;
+    }
+
+    .topBar_buttons {
+        float: right;
+        margin-right: 20px;
+
+        .topBar_button {
+            display: inline-block;
+            border-radius: 8px;
+
+            padding: 8px;
+            color: white;
+
+            cursor: pointer;
+        }
+        div {
+            background-color: #1CAAD9;
+        }
+        #topBar_Models {
+            background-color: #FF9E3A;
+        }
+        #topBar_Save_BEPI {
+            display: none;
+        }
+    }
+}

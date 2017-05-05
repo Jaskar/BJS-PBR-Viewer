@@ -1,0 +1,241 @@
+// *************** TOP BAR *************** //
+
+.leftBar {
+    position: absolute;
+    top: 55px;
+    left: 0px;
+
+    width: 322px;
+    box-sizing: border-box;
+    height: calc(100% - 55px);
+    background-color: #595959;
+
+    .leftBar_buttons {
+        width: 100%;
+        height: 40px;
+
+        .leftBar_button {
+            display: inline-block;
+            margin: 0px;
+            height: 41px;
+            width: 46px;
+            box-sizing: border-box;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+
+            background-color: #333333;
+            cursor: pointer;
+
+            img {
+                width: 32px;
+                height: 32px;
+                margin: 4px 0 0 8px;
+            }
+        }
+        .activeTab {
+            background-color: #595959;
+            border-bottom: none;
+        }
+    }
+
+    .leftBar_tabs {
+        height: 100%;
+        
+        .leftBar_tab {
+            height: calc(100% - 40px);
+            overflow-y: auto;
+            overflow-x: hidden;
+            display: none;
+
+            .lb_title {
+                width: 100%;
+                padding: 2px;
+                box-sizing: border-box;
+                text-align: center;
+                font-size: 1.1em;
+                color: #EEEEEE;
+                border-bottom: 1px solid grey;
+            }
+
+            .lb_selectionDiv {
+                width: 280px;
+                margin: auto;
+                margin-top: 15px;
+
+                select {
+                    width: 100%;
+                    background-color: #333333;
+                    color: white;
+                    border: none;
+                    line-height: 35px;
+                    font-size: 1.1em;
+                }
+            }
+
+            .lbt_divLabel {
+                color: white;
+                margin-top: 15px;
+                margin-bottom: 10px;
+            }
+            
+            .lbt_inputVec3 {
+                display: inline-block;
+                width: 50px;
+                margin: 0 15px;
+                line-height: 25px;
+                text-align: center;
+                color: white;
+                background-color: #333333;
+                border: none;
+                border-radius: 4px;
+            }
+        }
+
+        #leftBar_TabLights {
+            
+            #lbtLig_list {
+                width: 280px;
+                margin: 15px auto;
+            }
+
+            .lbtLig_list_delete {
+                cursor: pointer;
+                float: right;
+                width: 32px;
+                margin-right: 50px;
+                margin-top: -25px;
+            }
+
+            #lbtLig_addOne {
+                width: 280px;
+                margin: auto;
+                padding: 12px;
+                box-sizing: border-box;
+                text-align: center;
+                background-color: #333333;
+                color: #CCCCCC;
+                cursor: pointer;
+                border-radius: 6px;
+            }
+            #lbtLig_addOne:active {
+                background-color: #1A1A1A;
+                color: #1CAAD9;
+            }
+        }
+
+        #leftBar_TabTextures {
+
+            .lbtTex_workflowButtons {
+                width: 280px;
+                margin: auto;
+                margin-top: 10px;
+
+                div {
+                    display: none;
+                    width: 140px;
+                    padding: 12px;
+                    box-sizing: border-box;
+                    text-align: center;
+                    background-color: #333333;
+                    color: #CCCCCC;
+                    cursor: pointer;
+                }
+                .activeButton {
+                    background-color: #1A1A1A;
+                    color: #1CAAD9;
+                }
+            }
+            .lbtTex_workflowButtons :first-child {
+                border-top-left-radius: 6px;
+                border-bottom-left-radius: 6px;
+            }
+            .lbtTex_workflowButtons :last-child {
+                border-top-right-radius: 6px;
+                border-bottom-right-radius: 6px;
+            }
+
+            .lbtText_textureDiv {
+                width: 280px;
+                margin: auto;
+                vertical-align: middle;
+                display: none;
+
+                .lbtText_textureDivImg {
+                    display: inline-block;
+                    vertical-align: top;
+
+                    width: 40px;
+                    height: 40px;
+                    box-sizing: border-box;
+                    border: 1px solid black;
+                }
+                .lbtText_textureDivInput {
+                    display: inline-block;
+                    vertical-align: top;
+                    overflow: hidden;
+                    opacity: 0;
+                    cursor: pointer;
+
+                    width: 40px;
+                    height: 40px;
+                    margin-left: -40px;
+                    box-sizing: border-box;
+                    border: 1px solid black;
+                }
+            }
+
+            .lbtText_rangeDiv {
+                width: 280px;
+                margin: auto;
+                vertical-align: middle;
+                display: none;
+
+                .lbtText_rangeDivLabel {
+                    color: white;
+                    margin-top: 15px;
+                    margin-bottom: 10px;
+                }
+                .lbtText_rangeDivRange {
+                    display: inline-block;
+                    vertical-align: middle;
+                    width: 230px;
+                    height: 30px;
+                }
+                .lbtText_rangeDivValue {
+                    display: inline-block;
+                    vertical-align: middle;
+                    text-align: center;
+                    width: 37px;
+                    height: 30px;
+                    line-height: 30px;
+                    color: white;
+                    background-color: #333333;
+                    border-radius: 4px;
+                }
+            }
+        }
+
+        #leftBar_TabSkybox {
+
+            #lbtSky_addOne {
+                width: 280px;
+                margin: auto;
+                margin-top: 25px;
+                padding: 12px;
+                box-sizing: border-box;
+                text-align: center;
+                background-color: #333333;
+                color: #CCCCCC;
+                cursor: pointer;
+                border-radius: 6px;
+            }
+            .lbtSky_addOne:active {
+                background-color: #1A1A1A;
+                color: #1CAAD9;
+            }
+            input {
+                opacity: 0;
+            }
+        }
+    }
+}
