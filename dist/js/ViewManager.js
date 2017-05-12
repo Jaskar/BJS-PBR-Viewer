@@ -9,19 +9,23 @@ var ViewManager = (function () {
         // Get the canvas html element
         this._canvasElement = document.getElementById("renderCanvas");
         // Left menu tabs
-        var but_Lights = document.getElementById("leftBar_ButtonLights");
         var but_Textures = document.getElementById("leftBar_ButtonTextures");
-        var but_Skybox = document.getElementById("leftBar_ButtonSkybox");
-        var tab_Lights = document.getElementById("leftBar_TabLights");
         var tab_Textures = document.getElementById("leftBar_TabTextures");
+        var but_Lights = document.getElementById("leftBar_ButtonLights");
+        var tab_Lights = document.getElementById("leftBar_TabLights");
+        var but_Skybox = document.getElementById("leftBar_ButtonSkybox");
         var tab_Skybox = document.getElementById("leftBar_TabSkybox");
+        var but_Camera = document.getElementById("leftBar_ButtonCamera");
+        var tab_Camera = document.getElementById("leftBar_TabCamera");
         var tab_hideAll = function () {
-            but_Lights.classList.remove("activeTab");
             but_Textures.classList.remove("activeTab");
+            but_Lights.classList.remove("activeTab");
             but_Skybox.classList.remove("activeTab");
-            tab_Lights.style.display = "none";
+            but_Camera.classList.remove("activeTab");
             tab_Textures.style.display = "none";
+            tab_Lights.style.display = "none";
             tab_Skybox.style.display = "none";
+            tab_Camera.style.display = "none";
         };
         but_Lights.onclick = function (evt) {
             tab_hideAll();
@@ -37,6 +41,11 @@ var ViewManager = (function () {
             tab_hideAll();
             but_Skybox.classList.add("activeTab");
             tab_Skybox.style.display = "block";
+        };
+        but_Camera.onclick = function (evt) {
+            tab_hideAll();
+            but_Camera.classList.add("activeTab");
+            tab_Camera.style.display = "block";
         };
         var babylonFileInput = document.getElementById("inputBabylonFileMain");
         babylonFileInput.onchange = function (evt) {
@@ -61,6 +70,10 @@ var ViewManager = (function () {
         // TOP BAR BUTTONS
         document.getElementById("topBar_debugLayer").onclick = function (evt) {
             _this.appManager.toggleDebugLayer();
+        };
+        document.getElementById("topBar_downloadJSCode").style.display = "inline-block";
+        document.getElementById("topBar_downloadJSCode").onclick = function (evt) {
+            _this.appManager.getJSsave(document.getElementById("topBar_Subtitle").innerText);
         };
         // document.getElementById("topBar_Save_BEPI").style.display = "inline-block";
         // document.getElementById("topBar_Save_BEPI").onclick = (evt) => {
@@ -93,6 +106,54 @@ var ViewManager = (function () {
         };
         document.getElementById("lbtSky_addOne").onclick = function (evt) {
             _this._inputSky.click();
+        };
+        // LEFT TAB : CAMERA
+        document.getElementById("lbtCam_selectionButtons").style.display = "block";
+        this._cameraSelectionArc = document.getElementById("lbtCam_selectionButtonArc");
+        this._cameraDivArc = document.getElementById("lbtCam_infosArc");
+        this._cameraSelectionFree = document.getElementById("lbtCam_selectionButtonFree");
+        this._cameraDivFree = document.getElementById("lbtCam_infosFree");
+        var hideCameraSelectionElements = function () {
+            _this._cameraSelectionArc.classList.remove("activeButton");
+            _this._cameraSelectionFree.classList.remove("activeButton");
+            _this._cameraDivArc.style.display = "none";
+            _this._cameraDivFree.style.display = "none";
+        };
+        var displayCameraSelectionArc = function () {
+            _this._cameraSelectionArc.classList.add("activeButton");
+            _this._cameraDivArc.style.display = "block";
+        };
+        var displayCameraSelectionFree = function () {
+            _this._cameraSelectionFree.classList.add("activeButton");
+            _this._cameraDivFree.style.display = "block";
+        };
+        this._cameraSelectionArc.onclick = function (evt) {
+            hideCameraSelectionElements();
+            displayCameraSelectionArc();
+            _this.appManager.cameraChangeType("arc");
+        };
+        this._cameraSelectionFree.onclick = function (evt) {
+            hideCameraSelectionElements();
+            displayCameraSelectionFree();
+            _this.appManager.cameraChangeType("free");
+        };
+        document.getElementById("lbtCam_infoAutoZoomArc").onclick = function (evt) {
+            _this.appManager.cameraArcExpendZoom();
+        };
+        document.getElementById("lbtCam_infosArcRadius").oninput = function (evt) {
+            _this.appManager.cameraArcSetProperty("radius", Number(evt.srcElement.value));
+        };
+        document.getElementById("lbtCam_infosArcWheel").oninput = function (evt) {
+            _this.appManager.cameraArcSetProperty("wheel", Number(evt.srcElement.value));
+        };
+        this._canvasElement.addEventListener("mousewheel", function (evt) {
+            _this.appManager.cameraArcUpdateRadius();
+        });
+        document.getElementById("lbtCam_infoAutoCenterFree").onclick = function (evt) {
+            _this.appManager.cameraFreeExpendZoom();
+        };
+        document.getElementById("lbtCam_infosFreeSpeed").oninput = function (evt) {
+            _this.appManager.cameraFreeSetProperty("speed", Number(evt.srcElement.value));
         };
         // LEFT TAB : MATERIAL
         document.getElementById("leftBar_TabTextures").style.display = "block";
@@ -550,6 +611,10 @@ var ViewManager = (function () {
         names.forEach(function (name) {
             document.getElementById("lbSky_Selection").innerHTML += "<option value='" + name + "'>" + name + "</>";
         });
+    };
+    // ----------------------------- LIGHTS -----------------------------
+    ViewManager.prototype.updateCameraInfo = function (camType, type, value) {
+        document.getElementById("lbtCam_infos" + camType + type).value = (Math.round(value * 100) / 100).toFixed(2).toString();
     };
     return ViewManager;
 }());

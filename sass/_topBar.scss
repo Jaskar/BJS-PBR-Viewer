@@ -41,14 +41,11 @@
 
             cursor: pointer;
         }
-        div {
+        #topBar_downloadJSCode, #topBar_downloadTSCode {
             background-color: #1CAAD9;
         }
-        #topBar_Models {
+        #topBar_debugLayer {
             background-color: #FF9E3A;
-        }
-        #topBar_Save_BEPI {
-            display: none;
         }
     }
 }

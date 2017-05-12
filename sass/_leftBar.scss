@@ -1,4 +1,4 @@
-// *************** TOP BAR *************** //
+// *************** LEFT BAR *************** //
 
 .leftBar {
     position: absolute;
@@ -89,37 +89,16 @@
                 border: none;
                 border-radius: 4px;
             }
-        }
-
-        #leftBar_TabLights {
-            
-            #lbtLig_list {
-                width: 280px;
-                margin: 15px auto;
-            }
-
-            .lbtLig_list_delete {
-                cursor: pointer;
-                float: right;
-                width: 32px;
-                margin-right: 50px;
-                margin-top: -25px;
-            }
-
-            #lbtLig_addOne {
-                width: 280px;
-                margin: auto;
-                padding: 12px;
-                box-sizing: border-box;
+            .lbt_inputFloat {
+                display: inline-block;
+                width: 125px;
+                margin: 0 15px;
+                line-height: 25px;
                 text-align: center;
+                color: white;
                 background-color: #333333;
-                color: #CCCCCC;
-                cursor: pointer;
-                border-radius: 6px;
-            }
-            #lbtLig_addOne:active {
-                background-color: #1A1A1A;
-                color: #1CAAD9;
+                border: none;
+                border-radius: 4px;
             }
         }
 
@@ -215,6 +194,38 @@
             }
         }
 
+        #leftBar_TabLights {
+            
+            #lbtLig_list {
+                width: 280px;
+                margin: 15px auto;
+            }
+
+            .lbtLig_list_delete {
+                cursor: pointer;
+                float: right;
+                width: 32px;
+                margin-right: 50px;
+                margin-top: -25px;
+            }
+
+            #lbtLig_addOne {
+                width: 280px;
+                margin: auto;
+                padding: 12px;
+                box-sizing: border-box;
+                text-align: center;
+                background-color: #333333;
+                color: #CCCCCC;
+                cursor: pointer;
+                border-radius: 6px;
+            }
+            #lbtLig_addOne:active {
+                background-color: #1A1A1A;
+                color: #1CAAD9;
+            }
+        }
+
         #leftBar_TabSkybox {
 
             #lbtSky_addOne {
@@ -235,6 +246,66 @@
             }
             input {
                 opacity: 0;
+            }
+        }
+
+        #leftBar_TabCamera {
+
+            #lbtCam_selectionButtons {
+                width: 280px;
+                margin: auto;
+                margin-top: 10px;
+
+                div {
+                    display: inline-block;
+                    width: 140px;
+                    padding: 12px;
+                    box-sizing: border-box;
+                    text-align: center;
+                    background-color: #333333;
+                    color: #CCCCCC;
+                    cursor: pointer;
+                }
+                .activeButton {
+                    background-color: #1A1A1A;
+                    color: #1CAAD9;
+                }
+            }
+            #lbtCam_selectionButtons :first-child {
+                border-top-left-radius: 6px;
+                border-bottom-left-radius: 6px;
+            }
+            #lbtCam_selectionButtons :last-child {
+                border-top-right-radius: 6px;
+                border-bottom-right-radius: 6px;
+            }
+
+            .lbtCam_infosDiv {
+                display: none;
+                width: 280px;
+                margin: auto;
+                vertical-align: middle;                
+            }
+
+            #lbtCam_infosArc {
+                display: block;
+            }
+
+            #lbtCam_infosFree {
+                display: none;
+            }
+
+            .lbtCam_infoAuto {
+                display: inline-block;
+                width: 140px;
+                margin-left: 70px;
+                padding: 12px;
+                border-radius: 6px;
+                box-sizing: border-box;
+                text-align: center;
+                background-color: #333333;
+                color: #CCCCCC;
+                cursor: pointer;
             }
         }
     }

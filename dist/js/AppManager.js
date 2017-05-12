@@ -49,7 +49,7 @@ var AppManager = (function () {
         this._scene = new BABYLON.Scene(this._engine);
         this._scene.clearColor = new BABYLON.Color4(0, 0, 0, 0);
         // Camera
-        this._userCamera = new BABYLON.ArcRotateCamera("zoomCamera", -Math.PI / 4, Math.PI / 2.5, 10, BABYLON.Vector3.Zero(), this._scene);
+        this._userCamera = new BABYLON.ArcRotateCamera("arcUserCam", -Math.PI / 4, Math.PI / 2.5, 10, BABYLON.Vector3.Zero(), this._scene);
         this._userCamera.minZ = 0.001;
         this._userCamera.attachControl(this.canvas, true);
         // Skybox
@@ -75,8 +75,6 @@ var AppManager = (function () {
         this._focusedMesh = name;
         this._userCamera.zoomOn([this._scene.getMeshByName(name)], true);
         this._userCamera.wheelPrecision = 2500 / this._userCamera.radius;
-        // this._userCamera.setTarget(this._scene.getMeshByName(name).position);
-        // this._userCamera.radius = this._scene.getMeshByName(name).getBoundingInfo().boundingSphere.radius * 1.5;
     };
     AppManager.prototype.toggleDebugLayer = function (force) {
         this._isDebugLayerDisplayed = force || !this._isDebugLayerDisplayed;
@@ -111,9 +109,61 @@ var AppManager = (function () {
             });
             _this._userCamera.zoomOn(meshes, true);
             _this._userCamera.wheelPrecision = 2500 / _this._userCamera.radius;
+            _this._viewManager.updateCameraInfo("Arc", "Radius", _this._userCamera.radius);
+            _this._viewManager.updateCameraInfo("Arc", "Wheel", _this._userCamera.wheelPrecision);
             names.sort(function (nameA, nameB) { return nameA < nameB ? -1 : 1; });
             callback(names);
         });
+    };
+    // ----------------------------- CAMERA -----------------------------
+    AppManager.prototype.cameraChangeType = function (type) {
+        var sub = this._userCamera.name.substr(0, 3);
+        var lastPosition = this._userCamera.position.clone();
+        if (type == "arc" && this._userCamera.name.substr(0, 3) != "arc") {
+            var position = this._userCamera.position;
+            this._userCamera.dispose();
+            this._userCamera = new BABYLON.ArcRotateCamera("arcUserCam", 0, 0, 0, lastPosition, this._scene);
+            this._userCamera.minZ = 0.01;
+            this._userCamera.attachControl(this.canvas, true);
+            this.cameraArcExpendZoom();
+        }
+        else if (type == "free" && this._userCamera.name.substr(0, 3) != "fre") {
+            var target = this._userCamera.target.clone();
+            this._userCamera.dispose();
+            this._userCamera = new BABYLON.FreeCamera("freUserCam", lastPosition, this._scene);
+            this._userCamera.minZ = 0.01;
+            this._userCamera.setTarget(target);
+            this._userCamera.attachControl(this.canvas, true);
+            this._viewManager.updateCameraInfo("Free", "Speed", this._userCamera.speed);
+        }
+    };
+    AppManager.prototype.cameraArcExpendZoom = function () {
+        var meshes = [];
+        this._scene.meshes.forEach(function (mesh) {
+            if (mesh.name != "hdrSkybox")
+                meshes.push(mesh);
+        });
+        this._userCamera.zoomOn(meshes, true);
+        this._userCamera.wheelPrecision = 2500 / this._userCamera.radius;
+        this._viewManager.updateCameraInfo("Arc", "Radius", this._userCamera.radius);
+        this._viewManager.updateCameraInfo("Arc", "Wheel", this._userCamera.wheelPrecision);
+    };
+    AppManager.prototype.cameraArcSetProperty = function (type, value) {
+        if (type == "radius")
+            this._userCamera.radius = value;
+        else if (type == "wheel")
+            this._userCamera.wheelPrecision = value;
+    };
+    AppManager.prototype.cameraArcUpdateRadius = function () {
+        this._viewManager.updateCameraInfo("Arc", "Radius", this._userCamera.radius);
+    };
+    AppManager.prototype.cameraFreeExpendZoom = function () {
+        this._userCamera.position = BABYLON.Vector3.Zero();
+        this._userCamera.rotation = BABYLON.Vector3.Zero();
+    };
+    AppManager.prototype.cameraFreeSetProperty = function (type, value) {
+        if (type == "speed")
+            this._userCamera.speed = value;
     };
     // ----------------------------- LIGHTS -----------------------------
     AppManager.prototype.addLight = function (type, callback) {
@@ -177,8 +227,8 @@ var AppManager = (function () {
             this._skyboxMesh.dispose();
         }
         // Skybox
-        this._skyboxMesh = BABYLON.Mesh.CreateBox("hdrSkyBox", 1000.0, this._scene);
-        var hdrSkyboxMaterial = new BABYLON.PBRMaterial("skyBox", this._scene);
+        this._skyboxMesh = BABYLON.Mesh.CreateBox("hdrSkybox", 1000.0, this._scene);
+        var hdrSkyboxMaterial = new BABYLON.PBRMaterial("skybox", this._scene);
         hdrSkyboxMaterial.backFaceCulling = false;
         hdrSkyboxMaterial.reflectionTexture = this._skybox.clone();
         hdrSkyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
@@ -218,6 +268,7 @@ var AppManager = (function () {
             this.PBR.PBRmat.ambientTexture = this.PBR.textureAO;
             this.PBR.PBRmat.albedoTexture = this.PBR.textureAlbedo;
             this.PBR.PBRmat.bumpTexture = this.PBR.textureNormal;
+            this.PBR.PBRmat.emissiveTexture = this.PBR.textureEmissive;
             this.PBR.PBRmat.microSurfaceTexture = this.PBR.textureRoughness;
             this.PBR.PBRmat.reflectivityTexture = this.PBR.textureSpecular;
             this.setPowerReflection(this.PBR.powerReflection);
@@ -305,7 +356,7 @@ var AppManager = (function () {
         this.PBR.powerSpecular = power;
         this.PBR.PBRmat.reflectivityColor = new BABYLON.Color3(power, power, power);
     };
-    // ----------------------------- GET BABYLON EASY PBR IMPORT -----------------------------
+    // ----------------------------- GET BABYLON CODE -----------------------------
     AppManager.prototype.getJSONsave = function (fileName) {
         var finalObject = [];
         var PBR;
@@ -334,6 +385,115 @@ var AppManager = (function () {
         var a = document.createElement('a');
         a.href = URL.createObjectURL(new Blob([JSON.stringify(finalObject)], { type: "application/json" }));
         a.download = fileName + ".bepi";
+        a.click();
+    };
+    AppManager.prototype.getJSsave = function (fileName) {
+        var br = "\r\n";
+        var finalCode = "/* --------------------------------------" + br +
+            " * Code generated by PBR Material Viewer" + br +
+            "----------------------------------------- */" + br + br;
+        var PBR;
+        var lightCount = 0;
+        this._lights.forEach(function (light) {
+            if (light == null)
+                return;
+            var lightName = "hemi_" + lightCount;
+            finalCode += br;
+            finalCode += "// Hemispheric light " + lightCount + br;
+            finalCode += "var " + lightName + " = new BABYLON.HemisphericLight(\"hemi_" + lightCount + "\", new BABYLON.Vector3("
+                + light.direction.x + ","
+                + light.direction.y + ","
+                + light.direction.z + ")"
+                + ", scene);" + br;
+            finalCode += lightName + ".intensity = " + light.intensity + ";" + br;
+            finalCode += lightName + ".diffuse = new BABYLON.Color3("
+                + light.diffuse.r + ","
+                + light.diffuse.g + ","
+                + light.diffuse.b + ");" + br;
+            finalCode += lightName + ".groundColor = new BABYLON.Color3("
+                + light.groundColor.r + ","
+                + light.groundColor.g + ","
+                + light.groundColor.b + ");" + br;
+            finalCode += lightName + ".specular = new BABYLON.Color3("
+                + light.specular.r + ","
+                + light.specular.g + ","
+                + light.specular.b + ");" + br;
+            lightCount++;
+        });
+        if (this._lights.length > 0)
+            finalCode += br;
+        for (var key in this._PBRinfos) {
+            PBR = this._PBRinfos[key];
+            if (PBR.type == "")
+                continue;
+            var matName = key + "PBRmat";
+            finalCode += br;
+            finalCode += "// Material for object : " + key + br;
+            finalCode += "var " + matName + " = new BABYLON.PBRMaterial(\"" + key + "PBRmat\", myScene);" + br;
+            finalCode += "scene.getMeshByName(\"" + key + "\").material = " + matName + ";";
+            if (PBR.type == "specular") {
+                finalCode += matName + ".reflectionColor = new BABYLON.Vector3(" + PBR.powerReflection + "," + PBR.powerReflection + "," + PBR.powerReflection + ");" + br;
+                finalCode += matName + ".microSurface = " + PBR.powerRoughness + br;
+                finalCode += matName + ".reflectivityColor = new BABYLON.Vector3(" + PBR.powerSpecular + "," + PBR.powerSpecular + "," + PBR.powerSpecular + ");" + br;
+                if (PBR.textureAlbedoName != "") {
+                    finalCode += "var albedoTex = new BABYLON.Texture(\"/assets/" + key + "/" + PBR.textureAlbedoName + "\");" + br;
+                    finalCode += matName + ".albedoTexture = albedoTex;" + br;
+                }
+                if (PBR.textureAOName != "") {
+                    finalCode += "var ambientTex = new BABYLON.Texture(\"/assets/" + key + "/" + PBR.textureAOName + "\");" + br;
+                    finalCode += matName + ".ambientTexture = ambientTex;" + br;
+                }
+                if (PBR.textureNormalName != "") {
+                    finalCode += "var bumpTex = new BABYLON.Texture(\"/assets/" + key + "/" + PBR.textureNormalName + "\");" + br;
+                    finalCode += matName + ".bumpTexture = bumpTex;" + br;
+                }
+                if (PBR.textureEmissiveName != "") {
+                    finalCode += "var emissiveTex = new BABYLON.Texture(\"/assets/" + key + "/" + PBR.textureEmissiveName + "\");" + br;
+                    finalCode += matName + ".emissiveTexture = emissiveTex;" + br;
+                }
+                if (PBR.textureRoughnessName != "") {
+                    finalCode += "var microSurfaceTex = new BABYLON.Texture(\"/assets/" + key + "/" + PBR.textureRoughnessName + "\");" + br;
+                    finalCode += matName + ".microSurfaceTexture = microSurfaceTex;" + br;
+                }
+                if (PBR.textureSpecularName != "") {
+                    finalCode += "var reflectivityTex = new BABYLON.Texture(\"/assets/" + key + "/" + PBR.textureSpecularName + "\");" + br;
+                    finalCode += matName + ".reflectivityTexture = reflectivityTex;" + br;
+                }
+            }
+            else if (PBR.type == "metallic") {
+                finalCode += matName + ".reflectionColor = new BABYLON.Vector3(" + PBR.powerReflection + "," + PBR.powerReflection + "," + PBR.powerReflection + ");" + br;
+                finalCode += matName + ".microSurface = " + PBR.powerRoughness + br;
+                if (PBR.textureAlbedoName != "") {
+                    finalCode += "var albedoTex = new BABYLON.Texture(\"/assets/" + key + "/" + PBR.textureAlbedoName + "\");" + br;
+                    finalCode += matName + ".albedoTexture = albedoTex;" + br;
+                }
+                if (PBR.textureAOName != "") {
+                    finalCode += "var ambientTex = new BABYLON.Texture(\"/assets/" + key + "/" + PBR.textureAlbedoName + "\");" + br;
+                    finalCode += matName + ".ambientTexture = ambientTex;" + br;
+                }
+                if (PBR.textureNormalName != "") {
+                    finalCode += "var bumpTex = new BABYLON.Texture(\"/assets/" + key + "/" + PBR.textureNormalName + "\");" + br;
+                    finalCode += matName + ".bumpTexture = bumpTex;" + br;
+                }
+                if (PBR.textureMetallicName != "") {
+                    finalCode += "var metallicTex = new BABYLON.Texture(\"/assets/" + key + "/" + PBR.textureMetallicName + "\");" + br;
+                    finalCode += matName + ".metallicTexture = metallicTex;" + br;
+                }
+                if (PBR.textureRoughnessName != "") {
+                    finalCode += "var microSurfaceTex = new BABYLON.Texture(\"/assets/" + key + "/" + PBR.textureRoughnessName + "\");" + br;
+                    finalCode += matName + ".microSurfaceTexture = microSurfaceTex;" + br;
+                }
+            }
+            finalCode += matName + ".reflectionTexture = mySkybox;" + br;
+            finalCode += matName + ".cameraContrast = " + PBR.cameraContrast + ";" + br;
+            finalCode += matName + ".cameraExposure = " + PBR.cameraExposure + ";" + br;
+            finalCode += matName + ".alpha = " + PBR.materialOpacity + ";" + br;
+            finalCode += matName + ".directIntensity = " + PBR.lightDirect + ";" + br;
+            finalCode += matName + ".environmentIntensity = " + PBR.lightEnvironment + ";" + br;
+        }
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([finalCode], { type: "text/plain" }));
+        a.download = fileName + ".js";
         a.click();
     };
     return AppManager;

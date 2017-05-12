@@ -22,6 +22,15 @@ class ViewManager {
     private _skyList: HTMLSelectElement;
     private _inputSky: HTMLInputElement;
 
+    // CAMERA
+
+    private _cameraSelectionArc: HTMLElement;
+    private _cameraSelectionFree: HTMLElement;
+
+    private _cameraDivArc: HTMLElement;
+    private _cameraDivFree: HTMLElement;
+
+
     // MATERIALS
 
     private _workflowMetallic: HTMLElement;
@@ -94,21 +103,25 @@ class ViewManager {
 
         // Left menu tabs
 
-        let but_Lights = document.getElementById("leftBar_ButtonLights");
         let but_Textures = document.getElementById("leftBar_ButtonTextures");
-        let but_Skybox = document.getElementById("leftBar_ButtonSkybox");
-        let tab_Lights = document.getElementById("leftBar_TabLights");
         let tab_Textures = document.getElementById("leftBar_TabTextures");
+        let but_Lights = document.getElementById("leftBar_ButtonLights");
+        let tab_Lights = document.getElementById("leftBar_TabLights");
+        let but_Skybox = document.getElementById("leftBar_ButtonSkybox");
         let tab_Skybox = document.getElementById("leftBar_TabSkybox");
+        let but_Camera = document.getElementById("leftBar_ButtonCamera");
+        let tab_Camera = document.getElementById("leftBar_TabCamera");
 
         let tab_hideAll = () => {
-            but_Lights.classList.remove("activeTab");
             but_Textures.classList.remove("activeTab");
+            but_Lights.classList.remove("activeTab");
             but_Skybox.classList.remove("activeTab");
+            but_Camera.classList.remove("activeTab");
 
-            tab_Lights.style.display = "none";
             tab_Textures.style.display = "none";
+            tab_Lights.style.display = "none";
             tab_Skybox.style.display = "none";
+            tab_Camera.style.display = "none";
         }
 
         but_Lights.onclick = (evt) => {
@@ -125,6 +138,11 @@ class ViewManager {
             tab_hideAll();
             but_Skybox.classList.add("activeTab");
             tab_Skybox.style.display = "block";
+        }
+        but_Camera.onclick = (evt) => {
+            tab_hideAll();
+            but_Camera.classList.add("activeTab");
+            tab_Camera.style.display = "block";
         }
 
 
@@ -161,6 +179,10 @@ class ViewManager {
             this.appManager.toggleDebugLayer();
         };
 
+        document.getElementById("topBar_downloadJSCode").style.display = "inline-block";
+        document.getElementById("topBar_downloadJSCode").onclick = (evt) => {
+            this.appManager.getJSsave(document.getElementById("topBar_Subtitle").innerText);
+        }
         // document.getElementById("topBar_Save_BEPI").style.display = "inline-block";
         // document.getElementById("topBar_Save_BEPI").onclick = (evt) => {
         //     this.appManager.getJSONsave(document.getElementById("topBar_Subtitle").innerText);
@@ -201,6 +223,60 @@ class ViewManager {
             this._inputSky.click();
         };
 
+
+        // LEFT TAB : CAMERA
+
+        document.getElementById("lbtCam_selectionButtons").style.display = "block";
+        this._cameraSelectionArc = document.getElementById("lbtCam_selectionButtonArc");
+        this._cameraDivArc = document.getElementById("lbtCam_infosArc");
+        this._cameraSelectionFree = document.getElementById("lbtCam_selectionButtonFree");
+        this._cameraDivFree = document.getElementById("lbtCam_infosFree");
+
+        let hideCameraSelectionElements = () => {
+            this._cameraSelectionArc.classList.remove("activeButton");
+            this._cameraSelectionFree.classList.remove("activeButton");
+            this._cameraDivArc.style.display = "none";
+            this._cameraDivFree.style.display = "none";
+        };
+        let displayCameraSelectionArc = () => {
+            this._cameraSelectionArc.classList.add("activeButton");
+            this._cameraDivArc.style.display = "block";
+        };
+        let displayCameraSelectionFree = () => {
+            this._cameraSelectionFree.classList.add("activeButton");
+            this._cameraDivFree.style.display = "block";
+        };
+
+        this._cameraSelectionArc.onclick = (evt) => {
+            hideCameraSelectionElements();
+            displayCameraSelectionArc();
+            this.appManager.cameraChangeType("arc");
+        };
+        this._cameraSelectionFree.onclick = (evt) => {
+            hideCameraSelectionElements();
+            displayCameraSelectionFree();
+            this.appManager.cameraChangeType("free");
+        };
+
+        document.getElementById("lbtCam_infoAutoZoomArc").onclick = (evt) => {
+            this.appManager.cameraArcExpendZoom();
+        };
+        document.getElementById("lbtCam_infosArcRadius").oninput = (evt) => {
+            this.appManager.cameraArcSetProperty("radius", Number((<HTMLInputElement>evt.srcElement).value));
+        };
+        document.getElementById("lbtCam_infosArcWheel").oninput = (evt) => {
+            this.appManager.cameraArcSetProperty("wheel", Number((<HTMLInputElement>evt.srcElement).value));
+        };
+        this._canvasElement.addEventListener("mousewheel", (evt) => {
+            this.appManager.cameraArcUpdateRadius();
+        })
+
+        document.getElementById("lbtCam_infoAutoCenterFree").onclick = (evt) => {
+            this.appManager.cameraFreeExpendZoom();
+        };
+        document.getElementById("lbtCam_infosFreeSpeed").oninput = (evt) => {
+            this.appManager.cameraFreeSetProperty("speed", Number((<HTMLInputElement>evt.srcElement).value));
+        };
 
 
         // LEFT TAB : MATERIAL
@@ -741,5 +817,11 @@ class ViewManager {
         names.forEach((name) => {
             document.getElementById("lbSky_Selection").innerHTML += "<option value='" + name + "'>" + name + "</>";
         });
+    }
+
+    // ----------------------------- LIGHTS -----------------------------
+
+    public updateCameraInfo(camType: string, type: string, value: number) {
+        (<HTMLInputElement>document.getElementById("lbtCam_infos" + camType + type)).value = (Math.round(value*100)/100).toFixed(2).toString();
     }
 }

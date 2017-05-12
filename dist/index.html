@@ -27,6 +27,8 @@
         <div class="topBar_text" id="topBar_Subtitle">-</div>
 
         <div class="topBar_buttons">
+            <div class="topBar_button" id="topBar_downloadJSCode">JS Code</div>
+            <div class="topBar_button" id="topBar_downloadTSCode">TS Code</div>
             <div class="topBar_button" id="topBar_debugLayer">Debug Layer</div>
             <!--<div class="topBar_button" id="topBar_Help">Help</div>-->
             <!--<div class="topBar_button" id="topBar_Save_BEPI" tooltip="Babylon PBR Easy Import format">Save BEPI</div>-->
@@ -39,7 +41,7 @@
             <div class="leftBar_button" id="leftBar_ButtonTextures"><img src="./img/icon_textures.png">
             </div><div class="leftBar_button" id="leftBar_ButtonLights"><img src="./img/icon_lights.png">
             </div><div class="leftBar_button" id="leftBar_ButtonSkybox"><img src="./img/icon_skybox.png">
-            </div><!--<div class="leftBar_button" id="leftBar_ButtonCamera"><img src="./img/icon_camera.png"></div>-->
+            </div><div class="leftBar_button" id="leftBar_ButtonCamera"><img src="./img/icon_camera.png"></div>
             <!--</div><div class="leftBar_button" id="leftBar_ButtonMagic">-->
             <!--</div><div class="leftBar_button" id="leftBar_ButtonGPS">-->
             <!--</div><div class="leftBar_button" id="leftBar_ButtonMovie">-->
@@ -143,12 +145,30 @@
                 <div id="lbtLig_addOne">Add a light</div>
             </div>
             <div class="leftBar_tab" id="leftBar_TabSkybox">
-                <div class="lb_title">Skybox - HDR</div>
+                <div class="lb_title">SKYBOX - HDR</div>
                 <div class="lb_selectionDiv"><select id="lbSky_Selection"></select></div>
                 <div id="lbtSky_addOne">Add a Skybox - HDR</div>
                 <input type="file" id="SkyInput">
             </div>
             <div class="leftBar_tab" id="leftBar_TabCamera">
+                <div class="lb_title">CAMERA</div>
+                <div id="lbtCam_selectionButtons">
+                    <div id="lbtCam_selectionButtonArc" class="activeButton">Arc Rotate</div><div id="lbtCam_selectionButtonFree">Free</div>
+                </div>
+                <div class="lbtCam_infosDiv" id="lbtCam_infosArc">
+                    <div class="lbt_divLabel">Radius</div>
+                    <input id="lbtCam_infosArcRadius" class="lbt_inputFloat" type="number" step="1">
+                    <div class="lbt_divLabel">Wheel precision</div>
+                    <input id="lbtCam_infosArcWheel" class="lbt_inputFloat" type="number" step="1">
+                    <br><br>
+                    <div class="lbtCam_infoAuto" id="lbtCam_infoAutoZoomArc">Expend zoom</div>
+                </div>
+                <div class="lbtCam_infosDiv" id="lbtCam_infosFree">
+                    <div class="lbt_divLabel">Speed</div>
+                    <input id="lbtCam_infosFreeSpeed" class="lbt_inputFloat" type="number" step="1">
+                    <br><br>
+                    <div class="lbtCam_infoAuto" id="lbtCam_infoAutoCenterFree">Center camera</div>
+                </div>
             </div>
             <!--</div><div class="leftBar_tab" id="leftBar_TabMagic">
             </div><div class="leftBar_tab" id="leftBar_TabGPS">
